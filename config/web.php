@@ -4,7 +4,7 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
-    'id' => 'basic',
+    'id' => 'Api ERTH TV',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -12,10 +12,6 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
-        'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
-        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -24,6 +20,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
+            'class' => 'app\components\ApiErrorHandler',
             'errorAction' => 'site/error',
         ],
         'mailer' => [
@@ -42,15 +39,33 @@ $config = [
                 ],
             ],
         ],
-        'db' => $db,
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
+        'request' => [
+            'class' => 'yii\web\Request',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
             ],
+            'cookieValidationKey' => 'kDHcpDtnAUG5akDpM2RIQBmUtyHWVvwK',
+            'enableCsrfValidation' => false
         ],
-        */
+        'response' => [
+            'class' => 'yii\web\Response',
+            'on beforeSend' => function($event){
+                $response = $event->sender;
+                $response->headers->set("Access-Control-Allow-Origin","*");
+                $response->headers->set("Access-Control-Allow-Headers","accept, content-type, authorization, x-user");
+                $response->headers->set("Access-Control-Allow-Methods","POST, GET, PUT, DELETE, OPTIONS");
+
+                $actualStatusCode = $response->statusCode;
+                $response->data = [
+                    'success' => $response->isSuccessful,
+                    'statusCode' => $actualStatusCode,
+                    'data' => $response->data
+                ];
+            },
+            'format' => yii\web\Response::FORMAT_JSON,
+        ],
+        'db' => $db,
+        'urlManager' => require __DIR__ . '/rules.php',
     ],
     'params' => $params,
 ];
