@@ -164,6 +164,7 @@ class m210206_120353_fill_data extends Migration
      */
     public function down()
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS = 0;');
         $this->truncateTable('channel_categories');
         $this->truncateTable('channel_genres');
         $this->truncateTable('channel_packages');
@@ -172,6 +173,7 @@ class m210206_120353_fill_data extends Migration
         $this->truncateTable('channels');
         $this->truncateTable('genres');
         $this->truncateTable('packages');
+        $this->execute('SET FOREIGN_KEY_CHECKS = 1;');
     }
 
 }
