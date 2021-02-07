@@ -31,4 +31,12 @@ class ChannelProgrammQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
+    public function date( $date ){
+        $this->andWhere("[[date]]=:date",['date' => $date]);
+    }
+
+    public function channel( $channel_id ){
+        $this->andWhere("[[channel_id]]=:channel_id",['channel_id' => $channel_id]);
+    }
 }

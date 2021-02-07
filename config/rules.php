@@ -15,5 +15,6 @@ return [
             ],
             'pluralize' => false,
         ],
+        'GET api/programm/find' => 'api/programm/find',
     ],
 ];
