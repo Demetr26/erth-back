@@ -41,31 +41,15 @@ $config = [
         ],
         'request' => [
             'class' => 'yii\web\Request',
-            'parsers' => [
-                'application/json' => 'yii\web\JsonParser',
-            ],
             'cookieValidationKey' => 'kDHcpDtnAUG5akDpM2RIQBmUtyHWVvwK',
-            'enableCsrfValidation' => false
-        ],
-        'response' => [
-            'class' => 'yii\web\Response',
-            'on beforeSend' => function($event){
-                $response = $event->sender;
-                $response->headers->set("Access-Control-Allow-Origin","*");
-                $response->headers->set("Access-Control-Allow-Headers","accept, content-type, authorization, x-user");
-                $response->headers->set("Access-Control-Allow-Methods","POST, GET, PUT, DELETE, OPTIONS");
-
-                $actualStatusCode = $response->statusCode;
-                $response->data = [
-                    'success' => $response->isSuccessful,
-                    'statusCode' => $actualStatusCode,
-                    'data' => $response->data
-                ];
-            },
-            'format' => yii\web\Response::FORMAT_JSON,
         ],
         'db' => $db,
         'urlManager' => require __DIR__ . '/rules.php',
+    ],
+    'modules' => [
+        'api' => [
+            'class' => 'app\modules\api\Module',
+        ],
     ],
     'params' => $params,
 ];
@@ -76,14 +60,14 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*'],
     ];
 }
 
