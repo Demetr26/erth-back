@@ -9,6 +9,7 @@ services:
       - '8010:80'
     depends_on:
       - mysql
+    #command: 'yes | php yii migrate/up'
   mysql:
     image: mysql:latest
     volumes:

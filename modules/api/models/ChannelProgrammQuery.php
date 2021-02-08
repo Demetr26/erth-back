@@ -39,4 +39,10 @@ class ChannelProgrammQuery extends \yii\db\ActiveQuery
     public function channel( $channel_id ){
         $this->andWhere("[[channel_id]]=:channel_id",['channel_id' => $channel_id]);
     }
+
+    public function categories( $categories_id ){
+        $channels = ChannelCategories::find()->select('channel_id')->andFilterCompare('category_id',$categories_id)->column();
+        if($channels)
+            $this->andWhere("[[channel_id]]=:channel_id",['channel_id' => $channels]);
+    }
 }
