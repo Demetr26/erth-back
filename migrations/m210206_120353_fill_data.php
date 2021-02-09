@@ -21,36 +21,44 @@ class m210206_120353_fill_data extends Migration
                 [
                     'title' => 'Первый',
                     'is_hd' => 0,
+                    'logo' => 'https://epg.domru.ru/chlogo/1474871561.png',
                 ],
                 [
                     'title' => 'Россия 1',
                     'is_hd' => 0,
+                    'logo' => 'https://epg.domru.ru/chlogo/1474871590.png',
                 ],
                 [
                     'title' => 'Россия 2',
                     'is_hd' => 0,
-                    'age_restriction' => '18+'
+                    'age_restriction' => '18+',
+                    'logo' => 'https://epg.domru.ru/chlogo/1572609719.png',
                 ],
                 [
                     'title' => 'Россия 3',
                     'is_hd' => 0,
+                    'logo' => 'https://epg.domru.ru/chlogo/1474891600.png',
                 ],
                 [
                     'title' => 'Биатлон HD',
                     'is_hd' => 0,
+                    'logo' => 'https://epg.domru.ru/chlogo/1479972078.png',
                 ],
                 [
                     'title' => 'National Geographic',
                     'is_hd' => 1,
+                    'logo' => 'https://epg.domru.ru/chlogo/1475055337.png',
                 ],
                 [
                     'title' => 'Двадцать первый',
                     'is_hd' => 1,
-                    'age_restriction' => '18+'
+                    'age_restriction' => '18+',
+                    'logo' => 'https://epg.domru.ru/chlogo/1474891881.png',
                 ],
                 [
                     'title' => 'НТВ',
                     'is_hd' => 0,
+                    'logo' => 'https://epg.domru.ru/chlogo/1474871628.png',
                 ],
             ];
 
@@ -82,7 +90,7 @@ class m210206_120353_fill_data extends Migration
                 $oChannel->title = $channel['title'];
                 $oChannel->is_hd = $channel['is_hd'];
                 $oChannel->age_restriction = $channel['age_restriction'] ?? null;
-                $oChannel->logo = '/uploads/images/logos/' . $i . '.jpg';
+                $oChannel->logo = $channel['logo'];
                 $oChannel->insert();
                 $channel['id'] = $oChannel->id;
             }
