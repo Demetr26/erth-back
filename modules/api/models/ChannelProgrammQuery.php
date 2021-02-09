@@ -41,8 +41,18 @@ class ChannelProgrammQuery extends \yii\db\ActiveQuery
     }
 
     public function categories( $categories_id ){
-        $channels = ChannelCategories::find()->select('channel_id')->andFilterCompare('category_id',$categories_id)->column();
+        $channels = ChannelCategories::find()->select('channel_id')->andWhere(['category_id'=>$categories_id])->column();
         if($channels)
-            $this->andWhere("[[channel_id]]=:channel_id",['channel_id' => $channels]);
+            $this->andWhere(['channel_id' => $channels]);
+    }
+
+    public function packages( $packages_id ){
+        $channels = ChannelPackages::find()->select('channel_id')->andWhere(['package_id'=>$packages_id])->column();
+        if($channels)
+            $this->andWhere(['channel_id' => $channels]);
+    }
+
+    public function channels( $channels ){
+        $this->andWhere(['channel_id' => $channels]);
     }
 }
