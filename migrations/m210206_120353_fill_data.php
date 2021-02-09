@@ -15,7 +15,12 @@ class m210206_120353_fill_data extends Migration
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $packages = [0 => ['name' => 'Основные'], 1 => ['name' => 'Спорт+'], 2 => ['name' => 'HD'], 3 => ['name' => 'Для взрослых']];
-            $genres = [0 => ['name' => 'Кино'], 1 => ['name' => 'Сериалы'], 2 => ['name' => 'Музыка'], 3 => ['name' => 'Спорт']];
+            $genres = [
+                0 => ['name' => 'Кино', 'color' => '#ffb8b8'],
+                1 => ['name' => 'Сериалы', 'color' => '#beb8ff'],
+                2 => ['name' => 'Музыка', 'color' => '#b9ffb8'],
+                3 => ['name' => 'Спорт', 'color' => '#f9ffb8']
+            ];
             $categories = [0 => ['name' => 'Детские'], 1 => ['name' => 'Взрослые'], 2 => ['name' => 'Умные'], 3 => ['name' => 'Обучающие']];
             $channels = [
                 [
@@ -74,6 +79,7 @@ class m210206_120353_fill_data extends Migration
             foreach ($genres as &$genre) {
                 $oGenre = new \app\modules\api\models\Genres();
                 $oGenre->title = $genre['name'];
+                $oGenre->color = $genre['color'];
                 $oGenre->insert();
                 $genre['id'] = $oGenre->id;
             }
@@ -149,6 +155,7 @@ class m210206_120353_fill_data extends Migration
             // Заполняем программу передач
             for ($i = 0; $i < 15; $i++) {
                 $targetDate = date('Y-m-d', time() + (60 * 60 * 24 * ($i - 7)));
+                $newDate = date('Y-m-d', time() + (60 * 60 * 24 * ($i - 6)));
                 foreach ($channels as $channel) {
                     for ($t = 0; $t < count($times) - 1; $t++) {
                         $oProgramm = new \app\modules\api\models\ChannelProgramm();
@@ -156,7 +163,11 @@ class m210206_120353_fill_data extends Migration
                         $oProgramm->date = $targetDate;
                         $oProgramm->title = $faker->realText(rand(10, 40));
                         $oProgramm->time_start = $targetDate . ' ' . $times[$t].':00';
-                        $oProgramm->time_end = $targetDate . ' ' . $times[$t + 1].':00';
+                        if($t == count($times) - 2)
+                            $oProgramm->time_end = $newDate . ' ' . $times[$t + 1].':00';
+                        else
+                            $oProgramm->time_end = $targetDate . ' ' . $times[$t + 1].':00';
+                        $oProgramm->genre_id = $genres[array_rand($genres)]['id'];
                         $oProgramm->insert();
                     }
                 }

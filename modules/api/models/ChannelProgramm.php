@@ -13,6 +13,7 @@ use Yii;
  * @property string $time_start
  * @property string $time_end
  * @property string $title
+ * @property int $genre_id
  *
  * @property Channels $channel
  */
@@ -33,7 +34,7 @@ class ChannelProgramm extends \yii\db\ActiveRecord
     {
         return [
             [['channel_id', 'date', 'time_start', 'time_end', 'title'], 'required'],
-            [['channel_id'], 'integer'],
+            [['channel_id','genre_id'], 'integer'],
             [['date', 'time_start', 'time_end'], 'safe'],
             [['title'], 'string', 'max' => 255],
             [['channel_id'], 'exist', 'skipOnError' => true, 'targetClass' => Channels::className(), 'targetAttribute' => ['channel_id' => 'id']],

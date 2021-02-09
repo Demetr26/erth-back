@@ -18,7 +18,7 @@ class ProgrammController extends \yii\rest\Controller
         $packages_id = \Yii::$app->request->get('packages') ?? null;
         $date = \Yii::$app->request->get('date');
         if(!$date)
-             $date = '2021-02-09';
+             $date = date('Y-m-d');
 
         $result = Channels::find()->asArray()->all();
         $query = ChannelProgramm::find();

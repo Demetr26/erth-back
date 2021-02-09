@@ -19,6 +19,7 @@ class m210206_103656_channel_programm extends Migration
             'time_start' => $this->timestamp()->notNull(),
             'time_end' => $this->timestamp()->notNull(),
             'title' => $this->string()->notNull(),
+            'genre_id' => $this->integer()->comment('Жанр передачи')
         ]);
 
         // Channel_id FK
