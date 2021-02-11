@@ -36,11 +36,11 @@ class ProgrammController extends \yii\rest\Controller
             $packages_id = explode(',',$packages_id);
             $channelPackages = ChannelPackages::find()->select('channel_id')->andWhere(['package_id' => $packages_id])->column();
         }
-        if(count($channelPackages) && count($channels))
+        if(!empty($channelPackages) && !empty($channels))
             $channels = array_intersect($channelPackages, $channels);
 
-        if(count($channels) || count($channelPackages)){
-            $channel_ids = count($channels) ? $channels : $channelPackages;
+        if(!empty($channels) || !empty($channelPackages)){
+            $channel_ids = !empty($channels) ? $channels : $channelPackages;
             $query->channels($channel_ids);
         }
         $program = $query->all();
