@@ -16,6 +16,7 @@ class m210206_103129_genres extends Migration
         $this->createTable('genres', [
            'id' => $this->primaryKey(),
            'title' => $this->text()->notNull()->comment('Название жанра'),
+           'color' => $this->text()->notNull()->comment('Цвет для фильтрации'),
         ]);
     }
 

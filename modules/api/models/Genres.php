@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $title Название жанра
+ * @property string $color Цвет для фильтрации
  *
  * @property ChannelGenres[] $channelGenres
  */
